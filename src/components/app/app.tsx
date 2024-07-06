@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import { ConstructorPage } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
