@@ -28,6 +28,7 @@ const App = () => (
       <Route path='/profile' element={<Profile />} />
       <Route path='/profile/orders' element={<ProfileOrders />} />
       <Route path='/profile/orders' element={<NotFound404 />} />
+      <Route path='*' element={<NotFound404 />} />
     </Routes>
   </div>
 );
