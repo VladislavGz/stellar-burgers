@@ -14,7 +14,13 @@ import { ProtectedRoute } from '../protected-route';
 import '../../index.css';
 import styles from './app.module.css';
 
-import { AppHeader } from '@components';
+import {
+  AppHeader,
+  Modal,
+  OrderInfo,
+  IngredientDetails,
+  FeedInfo
+} from '@components';
 
 const App = () => (
   <div className={styles.app}>
@@ -67,6 +73,32 @@ const App = () => (
         element={
           <ProtectedRoute>
             <ProfileOrders />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path='/feed/:number'
+        element={
+          <Modal title='' onClose={() => {}}>
+            <FeedInfo />
+          </Modal>
+        }
+      />
+      <Route
+        path='/ingredients/:id'
+        element={
+          <Modal title='' onClose={() => {}}>
+            <IngredientDetails />
+          </Modal>
+        }
+      />
+      <Route
+        path='/profile/orders/:number'
+        element={
+          <ProtectedRoute>
+            <Modal title='' onClose={() => {}}>
+              <OrderInfo />
+            </Modal>
           </ProtectedRoute>
         }
       />
