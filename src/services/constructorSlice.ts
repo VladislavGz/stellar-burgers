@@ -20,7 +20,7 @@ export const constructorSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
-      const newItem = action.payload;
+      const newItem = { ...action.payload, id: action.payload._id };
       if (newItem.type === 'bun') {
         state.items.bun = newItem;
       } else {
