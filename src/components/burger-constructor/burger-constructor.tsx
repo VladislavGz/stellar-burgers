@@ -3,9 +3,11 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { selectorConstructor } from '../../services/constructorSlice';
 import { useSelector } from '../../services/store';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
+  const navigate = useNavigate();
   const { getConstructorItems } = selectorConstructor;
   const items = useSelector(getConstructorItems);
 
@@ -20,6 +22,7 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
+    navigate('/profile/orders/:number');
   };
   const closeOrderModal = () => {};
 
