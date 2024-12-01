@@ -50,7 +50,8 @@ const App = () => {
             <ProtectedRoute>
               <Login />
             </ProtectedRoute>
-          } />
+          }
+        />
         <Route
           path='/register'
           element={
