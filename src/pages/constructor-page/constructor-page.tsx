@@ -11,7 +11,7 @@ import { selectorIngredients } from '../../services/ingredientsSlice';
 import { RequestStatus } from '@utils-types';
 
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
+  /** TODO: взять переменную из стора (done)*/
   const { selectorIngredientsStatus } = selectorIngredients;
   const isIngredientsLoading =
     useSelector(selectorIngredientsStatus) !== RequestStatus.Success;
