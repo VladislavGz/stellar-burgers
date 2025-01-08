@@ -7,11 +7,13 @@ import {
 } from 'react-redux';
 import { ingredientsSlice } from './ingredientsSlice';
 import { constructorSlice } from './constructorSlice';
+import { feedSlice } from './feedSlice';
 
 // Заменить на импорт настоящего редьюсера
 const rootReducer = combineReducers({
   [ingredientsSlice.name]: ingredientsSlice.reducer,
-  [constructorSlice.name]: constructorSlice.reducer
+  [constructorSlice.name]: constructorSlice.reducer,
+  [feedSlice.name]: feedSlice.reducer
 });
 
 const store = configureStore({
