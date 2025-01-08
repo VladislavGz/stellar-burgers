@@ -22,7 +22,6 @@ export const BurgerConstructor: FC = () => {
   };
 
   const newOrder = useSelector(getConstructorNewOrder);
-  console.log(newOrder);
 
   const orderRequest = newOrder.isOrderRequest;
   
