@@ -96,7 +96,7 @@ const App = () => {
           path='/feed/:number'
           element={
             <Modal title='' onClose={handleCloseModal}>
-              <FeedInfo />
+              <OrderInfo />
             </Modal>
           }
         />
