@@ -9,7 +9,7 @@ export const Feed: FC = () => {
   const dispatch = useDispatch();
   const { getFeedInfo } = selectorFeed;
 
-  /** TODO: взять переменную из стора */
+  /** TODO: взять переменную из стора (done)*/
   const orders: TOrder[] = useSelector(getFeedInfo);
 
   if (!orders.length) {
