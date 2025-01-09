@@ -40,7 +40,8 @@ export const constructorSlice = createSlice({
       if (newItem.type === 'bun') {
         state.items.bun = newItem;
       } else {
-        state.items.ingredients.push(newItem);
+        const collision = state.items.ingredients.find(ingredient => ingredient._id === newItem.id);
+        if (!collision) state.items.ingredients.push(newItem);
       }
     },
     removeItem: (state, action) => {
