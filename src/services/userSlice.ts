@@ -1,4 +1,4 @@
-import { getUserApi, loginUserApi, logoutApi, registerUserApi } from "@api";
+import { getUserApi, loginUserApi, logoutApi, registerUserApi, updateUserApi } from "@api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TUser } from "@utils-types"
 import { deleteCookie, setCookie } from "../utils/cookie";
@@ -10,13 +10,15 @@ type TUserState = {
     isAuthChecked: boolean;
     loginErrorMessage: string;
     registerErrorMessage: string;
+    updateErrorMessage: string;
 }
 
 const initialState: TUserState = {
     user: null,
     isAuthChecked: false,
     loginErrorMessage: '',
-    registerErrorMessage: ''
+    registerErrorMessage: '',
+    updateErrorMessage: ''
 }
 
 export const getUser = createAsyncThunk(
@@ -37,6 +39,11 @@ export const registerUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
     'user/logoutUser',
     logoutApi
+)
+
+export const updateUser = createAsyncThunk(
+    'user/updateUser',
+    updateUserApi
 )
 
 export const userSlice = createSlice({
@@ -72,7 +79,9 @@ export const userSlice = createSlice({
                 state.registerErrorMessage = '';
             })
             .addCase(registerUser.fulfilled, (state, action) => {
-                //console.log(action.payload);
+                state.user = action.payload.user;
+                setCookie('accessToken', action.payload.accessToken);
+                localStorage.setItem('refreshToken', action.payload.refreshToken);
             })
             .addCase(registerUser.rejected, (state, error) => {
                 state.registerErrorMessage = error.error.message || '';
@@ -88,12 +97,24 @@ export const userSlice = createSlice({
                 console.log(error);
             })
 
+            //обновление данных
+            .addCase(updateUser.pending, (state) => {
+                state.updateErrorMessage = '';
+            })
+            .addCase(updateUser.fulfilled, (state, action) => {
+                state.user = action.payload.user;
+            })
+            .addCase(updateUser.rejected, (state, error) => {
+                state.updateErrorMessage = error.error.message || '';
+            })
+
     },
     selectors: {
         selectorIsAuthChecked: (state: TUserState) => state.isAuthChecked,
         selectorUserData: (state: TUserState) => state.user,
         selectorLoginErrorMessage: (state: TUserState) => state.loginErrorMessage,
         selectorRegisterErrorMessage: (state: TUserState) => state.registerErrorMessage,
+        selectorUpdateErrorMessage: (state: TUserState) => state.updateErrorMessage
     }
 });
 
