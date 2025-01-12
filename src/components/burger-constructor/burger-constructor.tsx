@@ -6,14 +6,16 @@ import {
   selectorConstructor
 } from '../../services/constructorSlice';
 import { useSelector } from '../../services/store';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
+import { selectorUser } from '../../services/userSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора (done)*/
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { getConstructorItems, getConstructorNewOrder } = selectorConstructor;
+  const {selectorIsAuthChecked, selectorUserData} = selectorUser;
   const items = useSelector(getConstructorItems);
 
   const constructorItems = {
@@ -27,11 +29,19 @@ export const BurgerConstructor: FC = () => {
   
   const orderModalData = newOrder.orderData;
 
+  const isAuthChecked = useSelector(selectorIsAuthChecked);
+  const userData = useSelector(selectorUserData);
+
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
 
     const orderRequestData = constructorItems.ingredients.map(ingredient => ingredient._id);
     orderRequestData.unshift(constructorItems.bun._id);
+
+    //проверка авторизации
+    if (isAuthChecked && !userData) {
+      navigate('/login');
+    }
     
     dispatch(
       getNewOrder(orderRequestData)
