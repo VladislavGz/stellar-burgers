@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
   const dispatch = useDispatch();
-  const {selectorUserData, selectorUpdateErrorMessage} = selectorUser;
+  const { selectorUserData, selectorUpdateErrorMessage } = selectorUser;
 
   /** TODO: взять переменную из стора (done)*/
   const user: TUser = useSelector(selectorUserData)!;

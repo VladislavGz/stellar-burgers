@@ -11,21 +11,21 @@ const logPaths = ['/login', '/register', '/forgot-password', '/reset-password'];
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const location = useLocation();
-  const {selectorIsAuthChecked, selectorUserData} = selectorUser;
+  const { selectorIsAuthChecked, selectorUserData } = selectorUser;
 
   const isAuthChecked = useSelector(selectorIsAuthChecked);
   const userData = useSelector(selectorUserData);
 
   if (!isAuthChecked) {
-    return <Preloader/>
+    return <Preloader />;
   }
 
   if (userData) {
-    if (logPaths.includes(location.pathname)) return <Navigate to={'/'}/>
+    if (logPaths.includes(location.pathname)) return <Navigate to={'/'} />;
     return children;
   }
 
   if (logPaths.includes(location.pathname)) return children;
 
-  return <Navigate to={'/login'}/>;
+  return <Navigate to={'/login'} />;
 };

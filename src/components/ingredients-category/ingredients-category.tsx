@@ -10,7 +10,7 @@ export const IngredientsCategory = forwardRef<
   TIngredientsCategoryProps
 >(({ title, titleRef, ingredients }, ref) => {
   const { getConstructorItems } = selectorConstructor;
-  const items = useSelector(getConstructorItems)
+  const items = useSelector(getConstructorItems);
 
   /** TODO: взять переменную из стора (done)*/
   const burgerConstructor = {

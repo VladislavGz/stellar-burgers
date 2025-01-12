@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { selectorIngredients } from '../../services/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { number } = useParams();
   const { getFeedInfo } = selectorFeed;
   const { selectorIngredientsData } = selectorIngredients;
@@ -17,8 +17,8 @@ export const OrderInfo: FC = () => {
   if (!orders.length) {
     dispatch(getFeeds());
   }
-  
-  const orderData = orders.find(order => order.number.toString() === number);
+
+  const orderData = orders.find((order) => order.number.toString() === number);
 
   const ingredients: TIngredient[] = useSelector(selectorIngredientsData);
 

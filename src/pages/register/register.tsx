@@ -6,17 +6,17 @@ import { TRegisterData } from '@api';
 
 export const Register: FC = () => {
   const dispatch = useDispatch();
-  const {selectorRegisterErrorMessage} = selectorUser;
+  const { selectorRegisterErrorMessage } = selectorUser;
 
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const registerData: TRegisterData = {email, name: userName, password}
+  const registerData: TRegisterData = { email, name: userName, password };
 
   const registerErrorMessage = useSelector(selectorRegisterErrorMessage);
 
-  const handleSubmit = (e: SyntheticEvent) => { 
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(registerUser(registerData));
   };

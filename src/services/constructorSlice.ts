@@ -40,7 +40,9 @@ export const constructorSlice = createSlice({
       if (newItem.type === 'bun') {
         state.items.bun = newItem;
       } else {
-        const collision = state.items.ingredients.find(ingredient => ingredient._id === newItem.id);
+        const collision = state.items.ingredients.find(
+          (ingredient) => ingredient._id === newItem.id
+        );
         if (!collision) state.items.ingredients.push(newItem);
       }
     },
@@ -73,7 +75,7 @@ export const constructorSlice = createSlice({
       .addCase(getNewOrder.fulfilled, (state, action) => {
         state.order.isOrderRequest = true;
         state.order.requestStatus = RequestStatus.Success;
-        state.order.orderData = action.payload.order
+        state.order.orderData = action.payload.order;
       })
       .addCase(getNewOrder.rejected, (state) => {
         state.order.isOrderRequest = true;

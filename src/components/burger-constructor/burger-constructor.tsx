@@ -15,7 +15,7 @@ export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { getConstructorItems, getConstructorNewOrder } = selectorConstructor;
-  const {selectorIsAuthChecked, selectorUserData} = selectorUser;
+  const { selectorIsAuthChecked, selectorUserData } = selectorUser;
   const items = useSelector(getConstructorItems);
 
   const constructorItems = {
@@ -26,7 +26,7 @@ export const BurgerConstructor: FC = () => {
   const newOrder = useSelector(getConstructorNewOrder);
 
   const orderRequest = newOrder.isOrderRequest;
-  
+
   const orderModalData = newOrder.orderData;
 
   const isAuthChecked = useSelector(selectorIsAuthChecked);
@@ -35,7 +35,9 @@ export const BurgerConstructor: FC = () => {
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
 
-    const orderRequestData = constructorItems.ingredients.map(ingredient => ingredient._id);
+    const orderRequestData = constructorItems.ingredients.map(
+      (ingredient) => ingredient._id
+    );
     orderRequestData.unshift(constructorItems.bun._id);
     orderRequestData.push(constructorItems.bun._id);
 
@@ -43,13 +45,11 @@ export const BurgerConstructor: FC = () => {
     if (isAuthChecked && !userData) {
       navigate('/login');
     }
-    
-    dispatch(
-      getNewOrder(orderRequestData)
-    );
+
+    dispatch(getNewOrder(orderRequestData));
   };
   const closeOrderModal = () => {
-    navigate(0)
+    navigate(0);
   };
 
   const price = useMemo(

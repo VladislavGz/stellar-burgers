@@ -6,17 +6,17 @@ import { TLoginData } from '@api';
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
-  const {selectorLoginErrorMessage} = selectorUser;
+  const { selectorLoginErrorMessage } = selectorUser;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const loginData: TLoginData = {
-    email, password
-  }
+    email,
+    password
+  };
 
   const loginErrorMessage = useSelector(selectorLoginErrorMessage);
-  
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
