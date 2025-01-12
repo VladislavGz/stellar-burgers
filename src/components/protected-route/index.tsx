@@ -7,6 +7,8 @@ type ProtectedRouteProps = {
   children: React.ReactElement;
 };
 
+const logPaths = ['/login', '/register', '/forgot-password', '/reset-password'];
+
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const location = useLocation();
   const {selectorIsAuthChecked, selectorUserData} = selectorUser;
@@ -19,11 +21,11 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   if (userData) {
-    if (location.pathname === '/login') return <Navigate to={'/'}/>
+    if (logPaths.includes(location.pathname)) return <Navigate to={'/'}/>
     return children;
   }
 
-  if (location.pathname === '/login') return children;
+  if (logPaths.includes(location.pathname)) return children;
 
   return <Navigate to={'/login'}/>;
 };
