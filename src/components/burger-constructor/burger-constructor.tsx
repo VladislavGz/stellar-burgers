@@ -37,6 +37,7 @@ export const BurgerConstructor: FC = () => {
 
     const orderRequestData = constructorItems.ingredients.map(ingredient => ingredient._id);
     orderRequestData.unshift(constructorItems.bun._id);
+    orderRequestData.push(constructorItems.bun._id);
 
     //проверка авторизации
     if (isAuthChecked && !userData) {
