@@ -25,6 +25,7 @@ import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
 import { getIngredients } from '../../services/ingredientsSlice';
 import { useNavigate } from 'react-router-dom';
+import { getUser } from '../../services/userSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
+    dispatch(getUser());
   }, []);
 
   const handleCloseModal = () => {
