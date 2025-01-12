@@ -2,17 +2,22 @@ import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient, TOrder } from '@utils-types';
-import { selectorFeed } from '../../services/feedSlice';
-import { useSelector } from '../../services/store';
+import { getFeeds, selectorFeed } from '../../services/feedSlice';
+import { useDispatch, useSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
 import { selectorIngredients } from '../../services/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
+  const dispatch = useDispatch()
   const { number } = useParams();
   const { getFeedInfo } = selectorFeed;
   const { selectorIngredientsData } = selectorIngredients;
 
   const orders: TOrder[] = useSelector(getFeedInfo);
+  if (!orders.length) {
+    dispatch(getFeeds());
+  }
+  
   const orderData = orders.find(order => order.number.toString() === number);
 
   const ingredients: TIngredient[] = useSelector(selectorIngredientsData);
