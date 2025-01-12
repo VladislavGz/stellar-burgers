@@ -1,7 +1,7 @@
-import { getUserApi, loginUserApi, registerUserApi } from "@api";
+import { getUserApi, loginUserApi, logoutApi, registerUserApi } from "@api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TUser } from "@utils-types"
-import { setCookie } from "../utils/cookie";
+import { deleteCookie, setCookie } from "../utils/cookie";
 
 
 
@@ -32,6 +32,11 @@ export const loginUser = createAsyncThunk(
 export const registerUser = createAsyncThunk(
     'user/registerUser',
     registerUserApi
+)
+
+export const logoutUser = createAsyncThunk(
+    'user/logoutUser',
+    logoutApi
 )
 
 export const userSlice = createSlice({
@@ -71,6 +76,16 @@ export const userSlice = createSlice({
             })
             .addCase(registerUser.rejected, (state, error) => {
                 state.registerErrorMessage = error.error.message || '';
+            })
+
+            //выход
+            .addCase(logoutUser.fulfilled, (state, action) => {
+                state.user = null;
+                deleteCookie('accessToken');
+                localStorage.removeItem('refreshToken');
+            })
+            .addCase(logoutUser.rejected, (state, error) => {
+                console.log(error);
             })
 
     },
