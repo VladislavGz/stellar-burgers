@@ -96,59 +96,49 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path='/feed/:number'
-          element={
-              <OrderInfo />
-          }
-        />
-        <Route
-          path='/ingredients/:id'
-          element={
-              <IngredientDetails />
-          }
-        />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route
           path='/profile/orders/:number'
           element={
             <ProtectedRoute>
-                <OrderInfo />
+              <OrderInfo />
             </ProtectedRoute>
           }
         />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
 
-      {background && 
+      {background && (
         <Routes>
           <Route
-          path='/feed/:number'
-          element={
-            <Modal title='' onClose={handleCloseModal}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal title='Детали ингредиента' onClose={handleCloseModal}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
-        <Route
-          path='/profile/orders/:number'
-          element={
-            <ProtectedRoute>
+            path='/feed/:number'
+            element={
               <Modal title='' onClose={handleCloseModal}>
                 <OrderInfo />
               </Modal>
-            </ProtectedRoute>
-          }
-        />
+            }
+          />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal title='Детали ингредиента' onClose={handleCloseModal}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute>
+                <Modal title='' onClose={handleCloseModal}>
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
-      }
+      )}
     </div>
   );
 };

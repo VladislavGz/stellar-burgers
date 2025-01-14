@@ -14,7 +14,7 @@ export const OrderInfo: FC = () => {
   const { selectorIngredientsData } = selectorIngredients;
 
   const orders: TOrder[] = useSelector(getOrderInfo);
-  
+
   const num = Number(number);
   if (!orders.length || orders[0].number !== num) {
     dispatch(getOrderByNumber(num));
