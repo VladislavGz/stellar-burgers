@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import {
   ConstructorPage,
   Feed,
@@ -30,6 +30,8 @@ import { getUser } from '../../services/userSlice';
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const background = location.state?.background;
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -43,7 +45,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route
@@ -97,6 +99,31 @@ const App = () => {
         <Route
           path='/feed/:number'
           element={
+              <OrderInfo />
+          }
+        />
+        <Route
+          path='/ingredients/:id'
+          element={
+              <IngredientDetails />
+          }
+        />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute>
+                <OrderInfo />
+            </ProtectedRoute>
+          }
+        />
+        <Route path='*' element={<NotFound404 />} />
+      </Routes>
+
+      {background && 
+        <Routes>
+          <Route
+          path='/feed/:number'
+          element={
             <Modal title='' onClose={handleCloseModal}>
               <OrderInfo />
             </Modal>
@@ -120,8 +147,8 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path='*' element={<NotFound404 />} />
-      </Routes>
+        </Routes>
+      }
     </div>
   );
 };
