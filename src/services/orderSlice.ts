@@ -29,12 +29,9 @@ export const orderSlice = createSlice({
             .addCase(getOrderByNumber.fulfilled, (state, action) => {
                 state.requestStatus = RequestStatus.Success;
                 state.order = action.payload.orders;
-                console.log(action);
-                
             })
             .addCase(getOrderByNumber.rejected, (state, error) => {
                 state.requestStatus = RequestStatus.Failed;
-                console.log(error);
             })
     },
     selectors: {
