@@ -3,9 +3,12 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
 
-const config: Config = {
+import type { JestConfigWithTsJest } from 'ts-jest';
+import { pathsToModuleNameMapper } from 'ts-jest';
+import { compilerOptions } from "./tsconfig.json";
+
+const config: JestConfigWithTsJest = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -194,8 +197,10 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-  
-  preset: 'ts-jest'
+
+  preset: 'ts-jest',
+  moduleDirectories: ["node_modules", "<rootDir>"],
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths)
 };
 
 export default config;
