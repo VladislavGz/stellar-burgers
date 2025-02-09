@@ -7,7 +7,7 @@ type TFeedState = {
   requestStatus: RequestStatus;
 };
 
-const initialState: TFeedState = {
+export const initialState: TFeedState = {
   orders: [],
   requestStatus: RequestStatus.Idle
 };
