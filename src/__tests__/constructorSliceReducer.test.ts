@@ -1,6 +1,6 @@
-import { RequestStatus, TConstructorIngredient } from "@utils-types";
+import { RequestStatus, TConstructorIngredient, TOrder } from "@utils-types";
 import { TConstructorState } from "../../src/services/constructorSlice";
-import { initialState, constructorSlice, constructorActions } from "../../src/services/constructorSlice";
+import { initialState, constructorSlice, constructorActions, getNewOrder } from "../../src/services/constructorSlice";
 
 const { addItem, removeItem, moveDown, moveUp } = constructorActions;
 
@@ -51,11 +51,21 @@ const mockIngredients: TConstructorIngredient[] = [
     }
 ];
 
-const prevState: TConstructorState = {...initialState, items: {bun: null, ingredients: mockIngredients}};
+const mockOrder: TOrder = {
+    _id: 'new_order_id',
+    status: '',
+    name: '',
+    createdAt: '',
+    updatedAt: '',
+    number: 0,
+    ingredients: ['1', '2']
+};
+
+const mockState: TConstructorState = { ...initialState, items: { bun: null, ingredients: mockIngredients } };
 
 describe('constructorSlice reducer', () => {
     test('initialization correct', () => {
-        const state = constructorSlice.reducer(undefined, {type: ''});
+        const state = constructorSlice.reducer(undefined, { type: '' });
         expect(state).toEqual(initialState);
     });
 
@@ -75,7 +85,7 @@ describe('constructorSlice reducer', () => {
             image_mobile: '',
         };
 
-        const state = constructorSlice.reducer(prevState, addItem(newIngredient));
+        const state = constructorSlice.reducer(mockState, addItem(newIngredient));
         const ingredients = state.items.ingredients;
         const lastIngredient = ingredients[ingredients.length - 1];
 
@@ -116,7 +126,7 @@ describe('constructorSlice reducer', () => {
             }
         ];
 
-        const state = constructorSlice.reducer(prevState, removeItem({ id: 'test_1' }));
+        const state = constructorSlice.reducer(mockState, removeItem({ id: 'test_1' }));
         const ingredients = state.items.ingredients;
 
         expect(ingredients.length).toBe(mockIngredients.length - 1);
@@ -169,7 +179,7 @@ describe('constructorSlice reducer', () => {
             }
         ];
 
-        const state = constructorSlice.reducer(prevState, moveDown(1));
+        const state = constructorSlice.reducer(mockState, moveDown(1));
         const ingredients = state.items.ingredients;
 
         expect(ingredients.length).toBe(mockIngredients.length);
@@ -224,30 +234,37 @@ describe('constructorSlice reducer', () => {
             }
         ];
 
-        const state = constructorSlice.reducer(prevState, moveUp(1));
+        const state = constructorSlice.reducer(mockState, moveUp(1));
         const ingredients = state.items.ingredients;
 
         expect(ingredients.length).toBe(mockIngredients.length);
         expect(ingredients).toEqual(testIngredients);
     });
 
-    // test('test getNewOrder action', () => {
-    //     const successResponse = {
-    //         ok: true,
-    //         json: () => {
-    //             return {
-    //                 order: 'orderData',
-    //                 name: 'orderName'
-    //             }
-    //         }
-    //     } as unknown as Response;
+    test('getNewOrder pending', () => {
+        const action = { type: getNewOrder.pending.type };
+        const state = constructorSlice.reducer(mockState, action);
 
-    //     global.fetch = jest.fn(() => {
-    //         return Promise.resolve(successResponse);
-    //     }) as jest.Mock;
+        expect(state.order.isOrderRequest).toBe(true);
+        expect(state.order.requestStatus).toBe(RequestStatus.Loading);
+    });
 
+    test('getNewOrder fulfilled', () => {
+        const action = {type: getNewOrder.fulfilled.type, payload: {
+            order: mockOrder
+        }};
+        const state = constructorSlice.reducer(mockState, action);
 
+        expect(state.order.isOrderRequest).toBe(true);
+        expect(state.order.requestStatus).toBe(RequestStatus.Success);
+        expect(state.order.orderData).toEqual(mockOrder);
+    });
 
+    test('getNewOrder rejected', () => {
+        const action = { type: getNewOrder.rejected.type };
+        const state = constructorSlice.reducer(mockState, action);
 
-    // });
+        expect(state.order.isOrderRequest).toBe(true);
+        expect(state.order.requestStatus).toBe(RequestStatus.Failed);
+    });
 });
