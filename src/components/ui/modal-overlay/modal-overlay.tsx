@@ -1,5 +1,5 @@
 import styles from './modal-overlay.module.css';
 
 export const ModalOverlayUI = ({ onClick }: { onClick: () => void }) => (
-  <div className={styles.overlay} onClick={onClick} />
+  <div data-testid='cy_modal_overlay' className={styles.overlay} onClick={onClick} />
 );
