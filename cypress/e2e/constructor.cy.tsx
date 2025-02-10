@@ -21,4 +21,38 @@ describe('Application', () => {
             item.should('be.visible');
         });
     });
+
+    it('opening the ingredient modal', () => {
+        const testIngredientId = '643d69a5c3f7b9001cfa0941';
+        cy.get(`[data-testid=cy_${testIngredientId}]`).click();
+
+        const modal = cy.get('[data-testid=cy_modal]');
+        modal.should('be.visible');
+
+        const detailsElement = modal.find(`[data-testid=cy_ingredientDetails_${testIngredientId}]`);
+        detailsElement.should('be.visible');
+    });
+
+    it('closing the modal of the ingredient by clicking on the button', () => {
+        const testIngredientId = '643d69a5c3f7b9001cfa093c';
+        cy.get(`[data-testid=cy_${testIngredientId}]`).click();
+
+        const modal = cy.get('[data-testid=cy_modal]');
+        modal.should('be.visible');
+
+        modal.find('[data-testid=cy_modal_closeButton]').click();
+        modal.should('not.exist');
+    });
+
+    it('closing the modal of an ingredient by clicking on the overlay', () => {
+        const testIngredientId = '643d69a5c3f7b9001cfa093c';
+        cy.get(`[data-testid=cy_${testIngredientId}]`).click();
+
+        const modal = cy.get('[data-testid=cy_modal]');
+        modal.should('be.visible');
+
+        const overlay = cy.get('[data-testid=cy_modal_overlay]');
+        overlay.click({force: true});
+        modal.should('not.exist');
+    });
 });
