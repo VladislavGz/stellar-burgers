@@ -56,4 +56,28 @@ describe('Application', () => {
         overlay.click({ force: true });
         modal.should('not.exist');
     });
+
+    it('assembling a burger and placing an order', () => {
+        const burgerIngredients = ['643d69a5c3f7b9001cfa093c', '643d69a5c3f7b9001cfa0941', '643d69a5c3f7b9001cfa093e', '643d69a5c3f7b9001cfa0944'];
+
+        burgerIngredients.forEach(id => {
+            cy.get(`[data-testid=cy_${id}] > button`).click();
+        });
+
+        cy.get('[data-testid=cy_burgerConstructor_submitSection] > button').click();
+
+        const modal = cy.get('[data-testid=cy_modal]');
+        modal.should('be.visible');
+
+        const title = cy.get('[data-testid=cy_orderDetails_title]');
+        title.should('be.visible');
+        title.should('have.text', '70000');
+        
+        modal.find('[data-testid=cy_modal_closeButton]').click({ multiple: true });
+        modal.should('not.exist');
+
+        cy.get('[data-testid=cy_burgerConstructor_defaultBun_1]').should('be.visible');
+        cy.get('[data-testid=cy_burgerConstructor_defaultIngredient]').should('be.visible');
+        cy.get('[data-testid=cy_burgerConstructor_defaultBun_2]').should('be.visible');
+    });
 });
