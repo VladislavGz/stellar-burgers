@@ -7,6 +7,7 @@ describe('Application', () => {
 
         cy.intercept('GET', 'ingredients', { fixture: 'ingredients' });
         cy.intercept('GET', 'user', { fixture: 'user' });
+        cy.intercept('POST', 'orders', { fixture: 'orderRequest' })
 
         cy.visit('http://localhost:5173/');
     });
@@ -52,7 +53,7 @@ describe('Application', () => {
         modal.should('be.visible');
 
         const overlay = cy.get('[data-testid=cy_modal_overlay]');
-        overlay.click({force: true});
+        overlay.click({ force: true });
         modal.should('not.exist');
     });
 });
