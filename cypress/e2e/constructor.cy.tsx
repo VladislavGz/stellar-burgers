@@ -1,7 +1,5 @@
 import type { } from 'cypress';
 
-const testUrl = 'http://localhost:5173/';
-
 const modalSelector = '[data-testid=cy_modal]';
 
 describe('Application', () => {
@@ -14,7 +12,7 @@ describe('Application', () => {
         cy.intercept('GET', 'user', { fixture: 'user' });
         cy.intercept('POST', 'orders', { fixture: 'orderRequest' })
 
-        cy.visit(testUrl);
+        cy.visit('/');
     });
 
     //проверка добавления ингредиентов в конструктор
