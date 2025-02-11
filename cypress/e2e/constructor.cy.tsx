@@ -2,6 +2,8 @@ import type { } from 'cypress';
 
 const testUrl = 'http://localhost:5173/';
 
+const modalSelector = '[data-testid=cy_modal]';
+
 describe('Application', () => {
 
     beforeEach(() => {
@@ -32,7 +34,7 @@ describe('Application', () => {
         const testIngredientId = '643d69a5c3f7b9001cfa0941';
         cy.get(`[data-testid=cy_${testIngredientId}]`).click();
 
-        const modal = cy.get('[data-testid=cy_modal]');
+        const modal = cy.get(modalSelector);
         modal.should('be.visible');
 
         const detailsElement = modal.find(`[data-testid=cy_ingredientDetails_${testIngredientId}]`);
@@ -44,7 +46,7 @@ describe('Application', () => {
         const testIngredientId = '643d69a5c3f7b9001cfa093c';
         cy.get(`[data-testid=cy_${testIngredientId}]`).click();
 
-        const modal = cy.get('[data-testid=cy_modal]');
+        const modal = cy.get(modalSelector);
         modal.should('be.visible');
 
         modal.find('[data-testid=cy_modal_closeButton]').click();
@@ -56,7 +58,7 @@ describe('Application', () => {
         const testIngredientId = '643d69a5c3f7b9001cfa093c';
         cy.get(`[data-testid=cy_${testIngredientId}]`).click();
 
-        const modal = cy.get('[data-testid=cy_modal]');
+        const modal = cy.get(modalSelector);
         modal.should('be.visible');
 
         const overlay = cy.get('[data-testid=cy_modal_overlay]');
@@ -78,7 +80,7 @@ describe('Application', () => {
         cy.get('[data-testid=cy_burgerConstructor_submitSection] > button').click();
 
         //проверка открытия модалки
-        const modal = cy.get('[data-testid=cy_modal]');
+        const modal = cy.get(modalSelector);
         modal.should('be.visible');
 
         //проверка отображаемого номера заказа
