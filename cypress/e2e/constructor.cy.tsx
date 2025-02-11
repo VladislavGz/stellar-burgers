@@ -1,5 +1,7 @@
 import type { } from 'cypress';
 
+const testUrl = 'http://localhost:5173/';
+
 describe('Application', () => {
 
     beforeEach(() => {
@@ -10,7 +12,7 @@ describe('Application', () => {
         cy.intercept('GET', 'user', { fixture: 'user' });
         cy.intercept('POST', 'orders', { fixture: 'orderRequest' })
 
-        cy.visit('http://localhost:5173/');
+        cy.visit(testUrl);
     });
 
     //проверка добавления ингредиентов в конструктор
