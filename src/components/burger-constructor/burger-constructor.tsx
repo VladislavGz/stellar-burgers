@@ -44,6 +44,7 @@ export const BurgerConstructor: FC = () => {
     //проверка авторизации
     if (isAuthChecked && !userData) {
       navigate('/login');
+      return;
     }
 
     dispatch(getNewOrder(orderRequestData));
