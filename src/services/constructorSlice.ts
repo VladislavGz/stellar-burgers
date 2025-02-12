@@ -2,7 +2,7 @@ import { orderBurgerApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RequestStatus, TConstructorIngredient, TOrder } from '@utils-types';
 
-type TConstructorState = {
+export type TConstructorState = {
   items: {
     bun: TConstructorIngredient | null;
     ingredients: TConstructorIngredient[];
@@ -14,7 +14,7 @@ type TConstructorState = {
   };
 };
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
   items: {
     bun: null,
     ingredients: []
