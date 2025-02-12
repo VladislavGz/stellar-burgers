@@ -2,10 +2,16 @@ import type { } from 'cypress';
 
 const modalSelector = '[data-testid=cy_modal]';
 
+const testRefreshToken = 'test-refresh-token';
+const testAccessToken = 'test-access-token';
+
 describe('Application', () => {
 
     beforeEach(() => {
         cy.viewport(1920, 1080);
+
+        window.localStorage.setItem('refreshToken', testRefreshToken);
+        cy.setCookie('accessToken', testAccessToken);
 
         //перехват запросов
         cy.intercept('GET', 'ingredients', { fixture: 'ingredients' });
